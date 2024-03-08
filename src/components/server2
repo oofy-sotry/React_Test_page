@@ -1,0 +1,33 @@
+const mariadb = require('mariadb');
+
+const pool = mariadb.createPool({
+  host: "localhost",
+  user: "root",
+  password: "1234",
+  database: "test",
+  connectionLimit: 20,
+  acquireTimeout: 10000,
+});
+
+async function asyncFunction() {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    
+    // SELECT 쿼리 실행
+    const selectRows = await conn.query("SELECT 1 as val");
+    console.log("SELECT Result:", selectRows);
+
+    // INSERT 쿼리 실행
+    const insertResult = await conn.query("INSERT INTO myTable (column1, column2) VALUES (?, ?)", [1, "mariadb"]);
+    console.log("INSERT Result:", insertResult);
+
+  } catch (error) {
+    console.error("Error executing queries:", error);
+  } finally {
+    if (conn) conn.release(); // release to pool
+  }
+}
+
+// 실행
+asyncFunction();

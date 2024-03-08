@@ -1,0 +1,82 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+
+interface ShowbuttonProps {
+  buttonText?: string;
+}
+
+const StyledButton = styled.button`
+  width: 90%;
+  height: 60px;
+  font-size: 16px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background-color: #D9D9D9;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const StyledOptions = styled.div`
+  list-style-type: none;
+  width: 85%;
+  padding: 0;
+  margin: 0 auto;
+  background-color: #D9D9D9;
+  transform-origin: top;
+  margin-bottom: 10px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background-color: #D9D9D9;
+  }
+
+  li {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #D9D9D9;
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+
+  background-color: #D9D9D9;
+`;
+
+
+const Showbutton: React.FC<ShowbuttonProps> = ({ buttonText }) => {
+    const [showInput, setShowInput] = useState(false);
+  
+    const handleButtonClick = () => {
+      setShowInput(!showInput);
+    };
+  
+    return (
+      <div>
+        <StyledButton onClick={handleButtonClick}>
+          {buttonText || "Toggle Input Screen"}
+        </StyledButton>
+  
+        {showInput && (
+          <StyledOptions>
+            <ul>
+              <li>색인추가</li>
+              <li>데이터조회</li>
+              <li>스키마</li>
+              <li>검색설정</li>
+              <li>설정</li>
+            </ul>
+          </StyledOptions>
+        )}
+      </div>
+    );
+  };
+  
+  export default Showbutton;
